@@ -1,0 +1,18 @@
+---
+title: "Stress in Besemah"
+author: "Bradley McDonnell"
+date: "1/1/2019"
+output: 
+  word_document: 
+    reference_docx: "styles/word-styles-reference-01.docx"
+bibliography: "bib/besemah-stress.bib"
+csl: "bib/glossa.csl"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+A number of recent studies have proposed that various languages in western Indonesia do not show evidence of wordlevel stress, and they only exhibit evidence for sentence-level prominence [@adisasmito1996phonetic;@goedemans2007stress]. This study examines the acoustic realization of prosodic prominence within different domains in Besemah, a little-described Malayic language of southwest Sumatra, Indonesia. The present study reports the results of a production experiment in which six female native speakers of Besemah completed an information gap task where target words were uttered in different frames that varied along two dimensions: information status and position within the sentence. Based on the results of a neural network analysis that used acoustic features to predict syllable position in the word, information status, and sentence position, this study shows that information status cannot be predicted above chance, but that both position of the syllable in the word and the position within in sentence can be predicted with above chance levels of accuracy. These patterns are consistent with the hypothesis that Besemah has predictable word-level stress, sentence-level prosodic boundary marking, and does not use prosodic means to mark focus. 
+
+# References

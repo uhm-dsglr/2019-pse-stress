@@ -1,0 +1,165 @@
+---
+title: "Besemah stress"
+author: "Bradley McDonnell"
+date: "1/1/2019"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    smaller: false
+    incremental: true
+    transition: slower 
+always_allow_html: yes
+bibliography: bib/besemah-stress.bib
+
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(htmltools.dir.version = FALSE)
+```
+
+```{r data, include=FALSE}
+
+# Loading libraries
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+# Loading the dataframe
+pse_stress <- read_tsv("data/pse-stress-simplified.csv") %>% 
+                          mutate(Word = fct_recode(Word),
+                                Position = fct_recode(Position),
+                                Vowel = fct_recode(Vowel),
+                                Weight = fct_recode(Weight),
+                                Focus = fct_recode(Focus),
+                                Final = fct_recode(Final),
+                                Participant = fct_recode(Participant),
+                                Final = fct_relevel(Final, "non-final", "final")
+                                )
+                          
+                        
+head(pse_stress)
+```
+
+## Overview
+
+- Present study is designed to tease apart different factors relating to prosodic prominence in Besemah. 
+- Investigates realization of common acoustic correlates of stress 
+  - f$_0$
+  - duration
+  - intensity
+  - spectral tilt 
+- within target words that vary 
+  - in their sentence position (sentence-medial vs. sentence-final position) 
+  - information status ('in focus' vs. 'out of focus').
+
+## Introduction
+
+1. There has been much disagreement over the status of word-level stress in the languages of western Indonesia [see @vanzanten2003status].
+1. Word-level stress has been claimed to fall predictably on the penultimate syllable unless it contains a schwa in which case it falls on the ultima [@adisasmito1996phonetic]
+1. An increasing number of studies have questioned this position for Standard Indonesian [@vanzanten2004word]
+
+
+## Design
+1. Target words were collected using an information gap task.
+1. This task involved two talkers: a confederate who asked questions and a naive participant who answered them.
+1. One female native speaker of Besemah acted as the confederate for all participants.
+
+## Materials
+
+|**Position** |       |    **Question/Answer**                    |  
+|-------------|-------|-------------------------------------------|
+|    final    | Q:    |  *Sebelah kanan kate ape?*                |
+|             |       | 'On the right side is what word?'         |
+|             | A:    | *Sebelah kanan kate **susu**.*            |
+|             |       | 'On the right side is **milk**.'          |
+|    medial   | Q:    | *Kate ape sebelah kanan?*                 |
+|             |       | 'What word is on the right side?'         |
+|             | A:    | *Kate* ***susu*** *sebelah kanan.*        |
+|             |       | 'The word **milk** is on the right side.'||
+
+
+## Words 
+
+|**Phoneme**| **Word** |                |
+|-----------|----------|----------------|
+| /i/       | /titi/   | 'to cross over'|
+|           | /pipis/  | 'to pulverize' |
+|           | /tʃiŋki/ | 'must have'    |
+|           | /sintiŋ/ | 'crooked'      |
+| /u/       | /susu/   | 'milk'         |
+|           | /tutus/  | 'to pound'     |
+|           | /tuŋku/  | 'hearth'       |
+|           | /tuntun/ | 'to watch'     |
+| /a/       | ---      |                | 
+|           | /tatap/  | 'to touch'     |
+|           | ---      |                |
+|           | /pantas/ | 'to be fitting'|
+| /ə/       | /tʃətə/  | 'to be exact'  |
+|           | ---      |                |
+|           | /təmpə/  | 'to forge'     |
+|           | ---      |                | 
+
+
+## Procedure 
+
+- Block A: sentence-medial, 'in focus'
+- Block B: sentence-final, 'in focus'
+- Block C: sentence-medial, 'out of focus'
+- Block D: sentence-final, 'in focus'
+
+## Duration
+
+```{r duration-final}
+# A simple boxplot of intensity
+dur <- ggplot(pse_stress, aes(Position, Duration))
+dur + geom_boxplot() + facet_wrap(~Final, ncol = 1) + coord_flip() + scale_x_discrete(limits = rev(levels(pse_stress$Position)))
+```
+
+## Duration
+
+```{r dur-mean-fin}
+pse_stress %>% 
+  group_by(Position, Final) %>%
+  summarize(Duration = round(mean(Duration), 3)) %>%
+  kable() %>%
+  kable_styling(full_width = TRUE) %>%
+  collapse_rows(columns = 1, valign = "middle")
+```
+
+## Conclusion
+
+- There are some interesting data here, but we cannot conclude much at this point. 
+
+---- 
+
+
+<!-- Note ---- is how you create a slide without a title in case you're curious -->
+
+Go to <https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html> for more ideas of what to do with your slides. 
+
+For even more on **isoslides** go to <https://openscience.nuance-r.com/ioslides_presentation_format.html>
+
+For `kable` tables, go to <https://haozhu233.github.io/kableExtra/awesome_table_in_html.html>
+
+For another style of slides using R Markdown, see `xaringan` <https://github.com/yihui/xaringan>
+
+If you are interested in bibliographies see <https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html>
+
+----
+
+If you want to number tables, see: 
+<https://www.r-bloggers.com/r-markdown-how-to-number-and-reference-tables/>
+
+If you wanted to look at potential article templates: 
+<https://github.com/rstudio/rticles>
+
+Some other table options in R Markdown: 
+<https://davidgohel.github.io/flextable/index.html>
+
+Tips for using knitr and R Markdown with Word (.docx) files
+<https://rmarkdown.rstudio.com/articles_docx.html>
+
+
+## References
